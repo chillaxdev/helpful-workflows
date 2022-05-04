@@ -33,3 +33,9 @@
 
 - Setup & configures carvel (ytt)
 - Generates the kubernetes manifest from the given Carvel ytt template
+
+## Environment (env)
+
+### init (env/init)
+
+- Initialize the environment variables from the given JSON file.

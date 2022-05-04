@@ -1,0 +1,10 @@
+{
+  "name": "env-init",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Shiv",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.7.0"
+  }
+}

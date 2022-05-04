@@ -1,0 +1,10 @@
+name: Environment - Init Variables
+description: Initialize environment variables from a JSON file
+inputs:
+  file:
+    description: JSON file path
+    required: true
+    default: cd.json
+runs:
+  using: "node16"
+  main: "dist/index.js"
