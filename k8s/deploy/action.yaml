@@ -8,7 +8,7 @@ inputs:
     description: YAML manifest file path
     required: true
     default: deployment.yaml
-  deleteByNamespace:
+  namespace:
     description: Delete resources in the specified namespace
     required: true
   deleteByLabel:
@@ -21,11 +21,14 @@ runs:
       with:
         version: "v1.22.7"
     - name: Set Kube Config
+      shell: bash
       run: |
         mkdir -p ~/.kube
         echo ${{ inputs.config }} | base64 --decode > ~/.kube/config
         kubectl version
     - name: Delete existing resources
+      shell: bash
       run: kubectl delete all,ingress -l ${{ inputs.deleteByLabel }} -n ${{ inputs.deleteByNamespace }}
     - name: Create Deployment
+      shell: bash
       run: kubectl apply -f ${{ inputs.manifest }}
