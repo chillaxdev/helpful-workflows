@@ -1,0 +1,30 @@
+name: Carvel - Create YAML Manifest from YTT Yaml Template
+description: Create YAML Manifest from YTT Yaml Template
+inputs:
+  yttTemplate:
+    description: YTT Manifest file path
+    required: true
+    default: deployment.ytt.yaml
+  data:
+    description: Pass any/multiple valid YTT command line flags (e.g. --data-value name=value --data-values-env VALUES)
+    required: true
+    default: ''
+  manifest:
+    description: Name of the YAML Manifest file that will be created
+    required: true
+    default: deployment.yaml
+  token:
+    description: Github Token to prevent API rate limit
+    required: true
+    default: ''
+runs:
+  using: "composite"
+  steps:
+    - uses: vmware-tanzu/carvel-setup-action@v1
+      with:
+        token: ${{ inputs.token }}
+        only: ytt
+        ytt: v0.40.1
+    - name: Create YAML Manifest
+      shell: bash
+      run: ytt -f ${{ inputs.yttTemplate }} ${{ inputs.data }} > ${{ inputs.manifest }}

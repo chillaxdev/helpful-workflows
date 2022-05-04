@@ -28,3 +28,8 @@
 - [ ] Add a validator for deleteByLabel input
 - [ ] (Input) Custom step/command to execute after deletion
 - [ ] Add an input to specify the kubectl version to install
+
+### ytt (k8s/ytt)
+
+- Setup & configures carvel (ytt)
+- Generates the kubernetes manifest from the given Carvel ytt template
