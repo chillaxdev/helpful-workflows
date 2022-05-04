@@ -1,0 +1,31 @@
+name: Kubernetes - Deploy a YAML manifest
+description: Deploys a YAML manifest to a Kubernetes cluster.
+inputs:
+  config:
+    description: Base64 encoded KubeConfig file
+    required: true
+  manifest:
+    description: YAML manifest file path
+    required: true
+    default: deployment.yaml
+  deleteByNamespace:
+    description: Delete resources in the specified namespace
+    required: true
+  deleteByLabel:
+    description: Delete resources labelled with the given label (key=value)
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - uses: azure/setup-kubectl@v2.0
+      with:
+        version: "v1.22.7"
+    - name: Set Kube Config
+      run: |
+        mkdir -p ~/.kube
+        echo ${{ inputs.config }} | base64 --decode > ~/.kube/config
+        kubectl version
+    - name: Delete existing resources
+      run: kubectl delete all,ingress -l ${{ inputs.deleteByLabel }} -n ${{ inputs.deleteByNamespace }}
+    - name: Create Deployment
+      run: kubectl apply -f ${{ inputs.manifest }}
