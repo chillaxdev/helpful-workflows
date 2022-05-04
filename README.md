@@ -27,3 +27,4 @@
 - [ ] Implement kubectl setup as a separate composite action
 - [ ] Add a validator for deleteByLabel input
 - [ ] (Input) Custom step/command to execute after deletion
+- [ ] Add an input to specify the kubectl version to install

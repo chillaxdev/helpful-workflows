@@ -28,7 +28,7 @@ runs:
         kubectl version
     - name: Delete existing resources
       shell: bash
-      run: kubectl delete all,ingress -l ${{ inputs.deleteByLabel }} -n ${{ inputs.deleteByNamespace }}
+      run: kubectl delete all,ingress -l ${{ inputs.deleteByLabel }} -n ${{ inputs.namespace }}
     - name: Create Deployment
       shell: bash
       run: kubectl apply -f ${{ inputs.manifest }}
