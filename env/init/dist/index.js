@@ -2023,12 +2023,15 @@ try {
     // console.log(`Tag is ${}`)
     const githubRef = process.env.GITHUB_REF;
     const branchName = githubRef.split('/').reverse()[0];
+    if ((typeof branchName !== 'string') || (branchName.length === 0)) {
+        throw new Error(`Invalid Branch Name: ${branchName}`);
+    }
     console.log(`Branch is ${branchName}`);
     const cd = JSON.parse(fs.readFileSync(jsonFilePath));
     exportEnvVariable('version', version);
     if ('image' in cd) {
         exportEnvVariable('image', cd.image);
-        exportEnvVariable('image_tag', cd.image + ':' + version);
+        exportEnvVariable('image_tag', cd.image + ':' + version + '-' + branchName);
     }
     if ('vars' in cd) {
         Object.keys(cd.vars).forEach(varName => {
