@@ -62,7 +62,9 @@ try {
     exportEnvVariable('version', version);
     if ('image' in cd) {
         exportEnvVariable('image', cd.image);
-        exportEnvVariable('image_tag', cd.image + ':' + version + '-' + branchName);
+        const imageTag = cd.image + ':' + version + '-' + branchName;
+        exportEnvVariable('image_tag', imageTag);
+        exportOutput("imageTag", imageTag);
     }
     if ('vars' in cd) {
         Object.keys(cd.vars).forEach(varName => {
