@@ -1,0 +1,12 @@
+name: Print Input
+description: Print Input
+inputs:
+  secret:
+    description: Secret
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Print Input
+      shell: bash
+      run: echo ${{ inputs.secret }}

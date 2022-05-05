@@ -1985,6 +1985,8 @@ const parseVersion = (jsonFilePath) => {
     return 'v' + version;
 };
 
+const isGithubSecret = (varName) => varName.startsWith("$");
+
 const envVarsExported = [];
 const exportEnvVariable = (name, value) => {
     const varName = 'ENV_' + name.toUpperCase();
@@ -1994,6 +1996,16 @@ const exportEnvVariable = (name, value) => {
     envVarsExported.push(varName);
     console.log(`Exporting ${varName}=${value}`);
     core.exportVariable(varName, value);
+};
+
+const outputsExported = [];
+const exportOutput = (name, value) => {
+    if (outputsExported.includes(name)) {
+        throw new Error(`Duplicate output ${name} found. Please check your JSON file.`);
+    }
+    outputsExported.push(name);
+    console.log(`Output ${name}=${value}`);
+    core.setOutput(name, value);
 };
 
 try {
@@ -2012,19 +2024,26 @@ try {
     const githubRef = process.env.GITHUB_REF;
     const branchName = githubRef.split('/').reverse()[0];
     console.log(`Branch is ${branchName}`);
-    const cd = JSON.parse(fs.readFileSync('./cd.json'));
+    const cd = JSON.parse(fs.readFileSync(jsonFilePath));
     exportEnvVariable('version', version);
     if ('image' in cd) {
         exportEnvVariable('image', cd.image);
         exportEnvVariable('image_tag', cd.image + ':' + version);
     }
     if ('vars' in cd) {
-        Object.keys(cd.vars).forEach(key => {
-            const value = cd.vars[key];
-            if (branchName in value) {
-                exportEnvVariable(key, value[branchName]);
+        Object.keys(cd.vars).forEach(varName => {
+            const varValue = cd.vars[varName];
+            if (branchName in varValue) {
+                const branchValue = varValue[branchName];
+                // Check if the value is a Github secret
+                if (isGithubSecret(varName)) {
+                    // Set Secret value as output
+                    exportOutput(varName.slice(1), branchValue);
+                } else {
+                    exportEnvVariable(varName, branchValue);
+                }
             } else {
-                throw new Error(`${key} has no value for branch ${branchName}`);
+                throw new Error(`${varName} has no value for branch ${branchName}`);
             }
         });
     }
