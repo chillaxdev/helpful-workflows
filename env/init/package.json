@@ -6,5 +6,11 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.7.0"
+  },
+  "scripts": {
+    "build": "ncc build env.init.js"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.4"
   }
 }

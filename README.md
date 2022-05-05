@@ -39,3 +39,17 @@
 ### init (env/init)
 
 - Initialize the environment variables from the given JSON file.
+
+*As of now, the JSON parsers are highly unpredictable. Symbols like $ or Flower Braces {} should be avoided in the json
+file.*
+
+**Todo**
+
+- [ ] Option to specify whether to override existing environment variable or not
+- [ ] Better Validation
+- [ ] Optimization
+- [ ] Add Tests
+- [ ] Better Project Skeleton
+- [ ] Better parsers
+- [ ] Option to disable printing env variables
+- [ ] Option to specify a custom prefix for env variable
