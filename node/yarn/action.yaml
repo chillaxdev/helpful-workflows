@@ -1,0 +1,16 @@
+name: Setup Node with yarn
+description: Setup NodeJS and install yarn
+inputs:
+  node-version:
+    description: NodeJS version
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup NodeJS
+      uses: actions/setup-node@v3
+      with:
+        node-version: "{{ inputs.node-version }}"
+    - name: Install Yarn
+      shell: bash
+      run: npm install -g yarn

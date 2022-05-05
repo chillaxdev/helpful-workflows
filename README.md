@@ -53,3 +53,10 @@ file.*
 - [ ] Better parsers
 - [ ] Option to disable printing env variables
 - [ ] Option to specify a custom prefix for env variable
+
+## Node (node)
+
+### yarn (node/yarn)
+
+- Installs & configures NodeJS
+- Installs & configures Yarn
