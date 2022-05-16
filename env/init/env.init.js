@@ -60,9 +60,12 @@ try {
     console.log(`Branch is ${branchName}`);
     const cd = JSON.parse(fs.readFileSync(jsonFilePath));
     exportEnvVariable('version', version);
+    exportEnvVariable('branch', branchName);
+    const fullVersionName = `${version}-${branchName}`;
+    exportEnvVariable('version_full', fullVersionName);
     if ('image' in cd) {
         exportEnvVariable('image', cd.image);
-        const imageTag = cd.image + ':' + version + '-' + branchName;
+        const imageTag = cd.image + ':' + fullVersionName;
         exportEnvVariable('image_tag', imageTag);
         exportOutput("imageTag", imageTag);
     }
