@@ -2007,7 +2007,7 @@ const exportOutput = (name, value) => {
     console.log(`Output ${name}=${value}`);
     core.setOutput(name, value);
 };
-
+// TODO: Implement CI for building dist files
 try {
     const jsonFilePath = core.getInput('file');
     console.log(`JSON file specified is ${jsonFilePath}`);
@@ -2032,6 +2032,7 @@ try {
     exportEnvVariable('branch', branchName);
     const fullVersionName = `${version}-${branchName}`;
     exportEnvVariable('version_full', fullVersionName);
+    exportOutput('version_full', fullVersionName);
     if ('image' in cd) {
         exportEnvVariable('image', cd.image);
         const imageTag = cd.image + ':' + fullVersionName;
