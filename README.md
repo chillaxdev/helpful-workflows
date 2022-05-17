@@ -7,9 +7,21 @@
 ### lbp (docker/lbp)
 
 - lbp abbreviated from "Login Build Push".
+    - Setups Docker
     - Logs in to the Docker registry
     - Builds the image from the Dockerfile in current directory
     - Pushes the image to the registry
+
+### pull (docker/pull)
+
+- Setups Docker
+- Login to the Docker registry
+- Pulls the image from the registry
+
+**TODO**
+
+- [ ] Make login optional
+- [ ] Create a separate action for logging in to the registry
 
 ## Kubernetes (k8s)
 

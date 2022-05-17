@@ -1,0 +1,27 @@
+name: Docker - Pull
+description: Login and pull image from the Registry
+inputs:
+  registry:
+    description: Docker registry host (e.g. docker.io, us.gcr.io)
+    required: true
+  username:
+    description: Docker registry username
+    required: true
+  password:
+    description: Docker registry password
+    required: true
+  tag:
+    description: Full image tag (e.g. docker.io/chillaxdev/app:latest)
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Login to Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ inputs.registry }}
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+    - name: Pull image
+      shell: bash
+      run: docker pull ${{ inputs.tag }}
