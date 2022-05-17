@@ -2,3 +2,4 @@
 /env/init/node_modules/
 /.github/
 cd.json
+.secrets
