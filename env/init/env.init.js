@@ -63,6 +63,7 @@ try {
     exportEnvVariable('branch', branchName);
     const fullVersionName = `${version}-${branchName}`;
     exportEnvVariable('version_full', fullVersionName);
+    exportOutput('version', version);
     exportOutput('version_full', fullVersionName);
     if ('image' in cd) {
         exportEnvVariable('image', cd.image);
