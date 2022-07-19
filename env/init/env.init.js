@@ -12,6 +12,14 @@ const parseVersion = (jsonFilePath) => {
             throw new Error(`Version is not a string`);
         }
         version = json.version;
+        if (version.endsWith('~')) {
+            version = version.substring(0, version.length - 1);
+            const commitSHA = process.env.GITHUB_SHA;
+            if (!commitSHA) {
+                throw new Error(`Invalid Commit SHA ${commitSHA} found. If this is not a commit, please remove the ~ suffix from the version.`);
+            }
+            version += '-' + commitSHA.substring(0, 7);
+        }
     }
     return 'v' + version;
 };
